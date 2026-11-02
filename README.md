@@ -1,2 +1,44 @@
-# security-detection-lab
-Laboratoire personnel : détection, investigation et analyse d’événements fictifs.
+# Security Detection Lab
+
+**Explorer la collecte, l'analyse et la qualification d'événements dans un laboratoire personnel.**
+
+Mes expérimentations de sécurité s'appuient sur des environnements Linux et Active Directory, notamment GOAD, ainsi que sur des outils comme Security Onion, Snort, Wazuh et Kibana. Ce dépôt présente une démarche de travail et un exemple autonome d'analyse sur des données fictives.
+
+> Les schémas sont pédagogiques et ne décrivent pas une intégration précise entre les produits. Les événements et résultats fournis sont synthétiques : ce ne sont pas des journaux ni des incidents réels.
+
+## Contenu
+
+| Élément | Description |
+| --- | --- |
+| [Architecture fonctionnelle](docs/architecture.md) | Sources, collecte et analyse dans un lab de détection. |
+| [Méthode d'investigation](docs/methodologie.md) | Du scénario de test à la qualification et à la documentation. |
+| [Événements fictifs](examples/auth-events.jsonl) | Exemple JSONL avec adresses de documentation et comptes fictifs. |
+| [Analyseur Python](tools/analyse_auth.py) | Compte les échecs de connexion par adresse source et utilisateur. |
+| [Tests](tests/test_analyse_auth.py) | Vérifient le regroupement et le traitement de données invalides. |
+
+## Essayer l'exemple
+
+Il suffit de disposer de Python 3 ; aucune bibliothèque externe n'est nécessaire.
+
+```bash
+python3 tools/analyse_auth.py examples/auth-events.jsonl --min-failures 3
+python3 -m unittest discover -s tests
+```
+
+Résultat attendu sur le fichier fourni :
+
+```text
+Source          Utilisateur  Échecs  Succès
+192.0.2.10      alice        3       1
+```
+
+L'exemple regroupe tout le fichier, sans fenêtre temporelle. Il illustre un début de triage, mais ne constitue ni une règle de détection opérationnelle ni une preuve de compromission. Un succès et plusieurs échecs associés au même groupe ne prouvent pas, à eux seuls, un lien entre ces événements.
+
+## Ressources liées
+
+- [Homelab Infrastructure](https://github.com/SebastienLavaux84302/homelab-infrastructure) : virtualisation, services et automatisation dans le lab personnel.
+- [Mon profil PentesterLab](https://pentesterlab.com/profile/SebastienLavaux84302) : exercices pratiques de sécurité.
+
+## Périmètre et assistance
+
+Projet personnel à vocation pédagogique. Les données réelles, configurations et résultats de lab ne sont pas inclus. L'exemple Python, ses tests et cette documentation ont été préparés avec l'assistance de **Codex (OpenAI)** ; ils ne représentent pas une intégration existante des outils cités.

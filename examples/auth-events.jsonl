@@ -1,0 +1,5 @@
+{"@timestamp":"2026-01-10T10:00:00Z","event":{"action":"login","outcome":"failure"},"source":{"ip":"192.0.2.10"},"user":{"name":"alice"}}
+{"@timestamp":"2026-01-10T10:00:10Z","event":{"action":"login","outcome":"failure"},"source":{"ip":"192.0.2.10"},"user":{"name":"alice"}}
+{"@timestamp":"2026-01-10T10:00:20Z","event":{"action":"login","outcome":"failure"},"source":{"ip":"192.0.2.10"},"user":{"name":"alice"}}
+{"@timestamp":"2026-01-10T10:00:30Z","event":{"action":"login","outcome":"success"},"source":{"ip":"192.0.2.10"},"user":{"name":"alice"}}
+{"@timestamp":"2026-01-10T10:01:00Z","event":{"action":"login","outcome":"failure"},"source":{"ip":"198.51.100.7"},"user":{"name":"bob"}}
