@@ -15,12 +15,13 @@ Mes expérimentations de sécurité s'appuient sur des environnements Linux et A
 | [Analyse forensic d'images](docs/forensic-analyse-images.md) | Synthèse anonymisée d'un exercice d'analyse et de contrôle d'intégrité. |
 | [Sécurité web et Active Directory](docs/securite-web-et-active-directory.md) | Retours d'expérience issus de laboratoires contrôlés. |
 | [Événements fictifs](examples/auth-events.jsonl) | Exemple JSONL avec adresses de documentation et comptes fictifs. |
-| [Analyseur Python](tools/analyse_auth.py) | Compte les échecs de connexion par adresse source et utilisateur. |
-| [Tests](tests/test_analyse_auth.py) | Vérifient le regroupement et le traitement de données invalides. |
+| [Cas pratique : échecs rapprochés](docs/detection-authentification.md) | Jeu de données fictif et scénario reproductible avec fenêtre temporelle. |
+| [Analyseur Python](tools/analyse_auth.py) | Comptage global ou recherche d'échecs rapprochés par source et utilisateur. |
+| [Tests](tests/test_analyse_auth.py) | Vérifient le regroupement, les dates, la fenêtre et les données invalides. |
 
 ## Essayer l'exemple
 
-Il suffit de disposer de Python 3 ; aucune bibliothèque externe n'est nécessaire.
+Il suffit de disposer de Python 3.10 ou plus récent ; aucune bibliothèque externe n'est nécessaire.
 
 ```bash
 python3 tools/analyse_auth.py examples/auth-events.jsonl --min-failures 3
@@ -34,7 +35,16 @@ Source          Utilisateur  Échecs  Succès
 192.0.2.10      alice        3       1
 ```
 
-L'exemple regroupe tout le fichier, sans fenêtre temporelle. Il illustre un début de triage, mais ne constitue ni une règle de détection opérationnelle ni une preuve de compromission. Un succès et plusieurs échecs associés au même groupe ne prouvent pas, à eux seuls, un lien entre ces événements.
+Sans l'option `--window-minutes`, l'exemple regroupe tout le fichier : un succès et plusieurs échecs d'un même groupe ne prouvent pas à eux seuls un lien entre ces événements.
+
+Pour examiner les échecs rapprochés dans une fenêtre glissante de 10 minutes :
+
+```bash
+python3 tools/analyse_auth.py examples/auth-events-fenetres.jsonl \
+  --min-failures 3 --window-minutes 10
+```
+
+Le résultat signale le groupe fictif `192.0.2.10` / `alice` : ses trois échecs sont compris dans la fenêtre, bornes incluses. Le groupe `bob` compte aussi trois échecs au total, mais ils sont trop éloignés dans le temps. Le [cas pratique](docs/detection-authentification.md) précise le format, l'interprétation et les limites de cette détection pédagogique.
 
 ## Ressources liées
 

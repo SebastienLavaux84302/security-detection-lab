@@ -12,7 +12,7 @@ Identifier la source des journaux, le fuseau horaire, l'état de la collecte et 
 
 Comparer les échecs, les succès, les comptes concernés et le contexte : activité attendue, application, fenêtre de temps et fréquence habituelle. Éviter de conclure à une compromission sur un seul indicateur.
 
-Le script du dépôt effectue uniquement un regroupement simplifié sur des données **fictives**. Il n'applique pas de fenêtre temporelle et ne corrèle pas les événements entre eux : c'est une base de discussion sur les limites d'une règle trop simple.
+Le script du dépôt propose un regroupement global et une recherche d'échecs rapprochés sur des données **fictives**. Cette dernière utilise une fenêtre temporelle, mais ne corrèle pas les succès ultérieurs : c'est une base de discussion, pas une règle opérationnelle. Voir le [cas pratique d'authentification](detection-authentification.md).
 
 ## 4. Documenter les résultats réels
 
